@@ -1,0 +1,330 @@
+<div class="content-body" ng-cloak>
+
+<div class="col-md-9">
+<div class="" style="float:left;width:100%;padding-bottom:20px!important">
+<div class='row'>
+
+    <div class="col-md-7">
+        <div class="panel panel-stream" style="height: 102px;">
+            <span class="pull-left avatar m-r">
+                <img ng-src="{{formatter.getAvatar(userid)}}" style="max-width:100px; max-height: 100px">
+            </span>
+            <span class="clear">
+                <div class="profile-fullname">{{profile.full_name}}</div>
+                <a ng-show="isMyPage()" class="text-ellipsis" ui-sref="profile" href="javascript:void(0)">{{'MY_PROFILE' | translate}}</a>
+                <div class="profile-sub">
+                    {{profile.position || '&nbsp;'}}<span ng-if="profile.position">&nbsp;-&nbsp;</span>{{profile.organization}}
+                </div>                
+            </span>
+        </div>
+        <div class="row panel panel-stream" style="padding: 10px !important;">
+            <h5>{{'IMAGES' | translate}}</h5>
+
+            <div class="row clear" style="width:450px">
+                <div class="col-sm-3" ng-repeat="preview in profile.imagePreviews | limitTo:3">
+                    <a href="javascript:void(0)" class="thumbnail" >
+                        <!--ng-click="openImageModal(preview.url)"-->
+                        <img ng-src="{{preview.url}}">
+                    </a>
+                </div>
+                <div class="col-sm-3" style="padding-top: 70px" ng-show="profile.imagePreviews.length > 3">
+                    <a href="javascript:void(0)" ng-click="openImagesModal()">{{'MORE' | translate}}</a>
+                </div>
+            </div>
+            <div class="row clear">
+                <div class="col-sm-12">
+                       <input accept=".jpg,.gif,.png" id="photoEditor" type="file" ng-file-select="onFileSelect($files)" style="position:absolute;left:-10000px;top:-10000px;">
+                       <button ng-show="isMyPage()" class='btn btn-xs btn-gray' style='font-size:12px' transfer-click="#photoEditor">
+                           <i class='fa fa-upload'></i> {{'UPLOAD_PHOTO' | translate}}
+                       </button>
+                       <p ng-hide="isImageValid" style="color: #F00; padding-top: 10px">{{wrongImageExtension}}</p>
+                       <span us-spinner="{width:2, length:2, shadow:on, color:'#000', hwaccel:on,radius:5}" spinner-key="avatarSpinner"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row panel panel-stream" style="padding: 10px !important;">
+            <h5>{{'VIDEOS' | translate}}</h5>
+
+            <div class="row clear">
+                <div class="col-sm-12">
+                    <input id="videoEditor" ng-show="isMyPage()" ng-model="videoLink" type="text" placeholder="{{'UPLOAD_VIDEO' | translate}}">
+                    <button ng-show="isMyPage()" class='btn btn-xs btn-gray' style='font-size:12px' ng-click="videoLinkUpload()">
+                        {{'POST' | translate}}
+                    </button>
+                    <span us-spinner="{width:2, length:2, shadow:on, color:'#000', hwaccel:on,radius:5}" spinner-key="avatarSpinner"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row panel panel-stream">
+            <div class="row clear">
+                <label class="col-sm-12 control-label pad10">Videos</label>
+                <div class="row">
+                    <div class="col-sm-6" ng-repeat="video in profile.videoPreviews">
+                        <ng-youtube-embed 
+                            video="video.url" 
+                            autoplay="false"
+                            color="white"
+                            disablekb="true"
+                            width="250"
+                            height="150"
+                            >
+                        </ng-youtube-embed>               
+                    </div>
+                </div>
+            </div>   
+        </div>
+        <div class="row panel panel-stream">
+            <label class="col-sm-12 control-label pad10">Information</label>
+            <div class="row" ng-repeat="field in profile.custom_fields" style="padding-top: 10px">
+                <div ng-show="{{profile['custom_'+field.name].length >0}}">
+                    <label class="col-sm-6 control-label ng-binding">{{field.caption}}</label>
+                    <div class="col-sm-6">
+                        {{profile['custom_'+field.name]}}
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+
+
+    <div class="col-md-5">
+        <div ng-hide="isMyPage()">
+            <div class="col-md-5">
+                <p ng-show="profile.followStatus == 0">
+                    <button type=button class="btn btn-primary" ng-click=followMe(userid)>{{'FOLLOW' | translate}}
+                        {{profile.first_name}}
+                    </button>
+                </p>
+                <p ng-show="profile.followStatus == 1">
+                    <button type=button class="btn btn-primary" ng-click=unfollowMe(userid)>{{'UNFOLLOW' | translate}}
+                        {{profile.first_name}}
+                    </button>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-10">
+            <h5 class="ng-binding">{{'PROJECTS' | translate}}</h5>
+
+            <div class="pasnel panel-stream animated fadeInDown">
+                <div style="max-height: 300px; overflow:auto">
+                    <table class=table>
+                        <tbody>
+                        <tr ng-repeat="space in profile.spaces | orderBy: title">
+                            <td><a ng-click="gotoSpace(space.code)">{{space.title}}</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-10">
+            <h5 class="ng-binding">{{'USER_INITIATIVES' | translate}}</h5>
+
+            <div class="pasnel panel-stream animated fadeInDown">
+                <div style="max-height: 300px; overflow:auto">
+                    <table class=table>
+                        <tbody>
+                        <tr ng-repeat="initiative in profile.initiatives | orderBy: title">
+                            <td><a ng-click="gotoIniciative(initiative.code)">{{initiative.title}}</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-10">
+            <h5 class="ng-binding">{{'USER_IDEAS' | translate}}</h5>
+
+            <div class="pasnel panel-stream animated fadeInDown">
+                <div style="max-height: 300px; overflow:auto">
+                    <table class=table>
+                        <tbody>
+                        <tr ng-repeat="question in profile.questions | orderBy: title">
+                            <td><a ng-click="gotoIdea(question.code)">{{question.title}}</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel panel-stream" style="margin: 10px !important;">
+    <h5>{{'NEWS_LIST' | translate}}</h5><br>
+
+    <div class="pasnel panel-stream animated fadeInDown">
+        <div style="max-height: 300px; overflow:auto">
+            <table class=table>
+                <tbody>
+                <tr ng-repeat="news in profile.newslist | orderBy: news">
+                    <td><p>{{news.news}}</p></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="panel panel-stream" style="margin: 10px !important;" ng-show="isMyPage()">
+    <h5>{{'USERS_REVIEWS' | translate}}</h5><br>
+
+    <div class="panel panel-stream" style='z-index:{{1000-$index}}; box-shadow:  none; border-bottom: 1px solid #ddd' ng-repeat="review in profile.reviews | orderBy: created">
+        <div class="col-md-6">
+            <p style="font-size: 14px; font-style: italic; color:#666">
+
+                <span ng-bind-html="review.content" class="home-content-text"></span>&nbsp;
+                <br>
+
+            </p>
+        </div>
+		<div class="col-md-4">
+            <p style="font-size: 12px; font-style: italic; color:#666">
+				By <span ng-bind-html="review.full_name" class="home-content-text"></span>&nbsp;
+                on <span class="home-content-text">{{review.created | date:"MM/dd/yyyy 'at' h:mma"}}</span>&nbsp;
+                <br>
+
+            </p>
+		</div>
+
+        <div class="clearfix"></div>
+
+	</div>
+</div>
+
+<!-- <div class="panel panel-stream" style="margin: 10px !important;" ng-show="isMyPage()">
+    <h5>{{'USERS_COMMENTS' | translate}}</h5><br>
+
+    <div class="panel panel-stream" style='z-index:{{1000-$index}}; box-shadow:  none; border-bottom: 1px solid #ddd' ng-repeat="comment in profile.comments | orderBy: created">
+        <div class="col-md-6">
+            <p style="font-size: 14px; font-style: italic; color:#666">
+
+                <span ng-bind-html="comment.content" class="home-content-text"></span>&nbsp;
+                <br>
+
+            </p>
+        </div>
+		<div class="col-md-4">
+            <p style="font-size: 12px; font-style: italic; color:#666">
+				By <span ng-bind-html="comment.full_name" class="home-content-text"></span>&nbsp;
+                on <span ng-bind-html="comment.created" class="home-content-text"></span>&nbsp;
+                <br>
+
+            </p>
+		</div>
+
+        <div class="clearfix"></div>
+
+	</div>
+</div> -->
+	<div class="col-md-12" ng-hide="isMyPage()">
+		   <div class="col-sm-6">
+				<label class="col-sm-6 control-label">{{'POST_REVIEW' | translate}}</label>
+				 <form class="form-horizontal" role="form" style="padding: 5px">
+					<textarea class="form-control ng-pristine ng-valid" rows="4" ng-model="review"></textarea><br/>
+					<button class='btn btn-xs btn-primary' ng-click="sendReviewClick()">{{'SUBMIT' | translate}}</button>
+				 </form>
+			</div>
+
+		   <!-- <div class="col-sm-6">
+				<label class="col-sm-6 control-label">{{'POST_COMMENT' | translate}}</label>
+				 <form class="form-horizontal" role="form" style="padding: 5px">
+					<textarea class="form-control ng-pristine ng-valid" rows="4" ng-model="comment"></textarea><br/>
+					<button class='btn btn-xs btn-primary' ng-click="sendCommentClick()">{{'SUBMIT' | translate}}</button>
+				 </form>
+			</div> -->
+	</div>
+</div>
+
+<div class="col-md-5">
+    <h5>Follows</h5>
+
+    <div class="pasnel panel-stream animated fadeInDown">
+        <div class="row">
+            <table class="table">
+                <thead>
+                <tr>
+                    <td><strong>Name</strong></td>
+                    <!--<td><strong>Email</strong></td>
+                    <td><strong>Phone</strong></td>
+                    <td><strong>Organization</strong></td>-->
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="user in profile.followers | orderBy: full_name">
+                    <td><a href="#/userprofile/{{user.id}}">{{user.full_name}}</a></td>
+                    <!--<td>{{user.email}}</td>
+                    <td>{{user.organization}}</td>
+                    <td>{{user.phone}}</td>-->
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-7">
+    <h5 class="ng-binding">Following</h5>
+    <div class="pasnel panel-stream animated fadeInDown">
+        <div class="row">
+            <table class="table">
+                <thead>
+                <tr>
+                    <td><strong>Name</strong></td>
+                    <!--<td><strong>Email</strong></td>
+                    <td><strong>Phone</strong></td>
+                    <td><strong>Organization</strong></td>-->
+                    <td ng-if="isMyPage()"><strong>Unfollow</strong></td>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="user in profile.following | orderBy: full_name">
+                        <td><a href="#/userprofile/{{user.id}}">{{user.full_name}}</a></td>
+                        <!--<td>{{user.email}}</td>
+                        <td>{{user.organization}}</td>
+                        <td>{{user.phone}}</td>-->
+                        <td ng-if="isMyPage()">
+                            <button type=button class="btn btn-primary" ng-click=unfollowMe(user.id)>{{'UNFOLLOW' | translate}}
+                                {{profile.first_name}}
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<div class="col-md-3">
+    <div class="panel pad10">
+        <h5>{{'CONTACT' | translate}}</h5>
+
+        <div ng-if='profile.email' class='profile-contact-info'><i class='fa fa-envelope fa-fw'></i><a
+                href="mailto:{{profile.email}}"> {{profile.email || ''}}</a></div>
+        <div ng-if='profile.phone' class='profile-contact-info'><i class='fa fa-phone fa-fw'></i><a
+                href="javascript:void(0)"> {{profile.phone || ''}}</a></div>
+        <div ng-if='profile.facebook' class='profile-contact-info'><i class='fa fa-facebook fa-fw'></i><a
+                href="https://facebook.com/{{profile.facebook}}" target="_blank"> {{profile.facebook}}</a></div>
+        <div ng-if='profile.twitter' class='profile-contact-info'><i class='fa fa-twitter fa-fw'></i><a
+                href="https://twitter.com/{{profile.twitter}}" target="_blank"> {{profile.twitter}}</a></div>
+        <div ng-if='profile.googleplus' class='profile-contact-info'><i class='fa fa-google-plus fa-fw'></i><a
+                href="https://plus.google.com/+{{profile.googleplus}}" target="_blank"> {{profile.googleplus}}</a></div>
+        <div ng-if='profile.linkdin' class='profile-contact-info'><i class='fa fa-linkedin fa-fw'></i><a
+                href="http://www.linkedin.com/{{profile.linkedin}}" target="_blank"> {{profile.linkedin}}</a></div>
+        <div ng-if='profile.skype' class='profile-contact-info'><i class='fa fa-skype fa-fw'></i><a
+                href="javascript:void(0)"> {{profile.skype}}</a></div>
+        <div ng-if='profile.github' class='profile-contact-info'><i class='fa fa-github fa-fw'></i><a
+                href="https://github.com/{{profile.github}}" target="_blank"> {{profile.github}}</a></div>
+    </div>
+    <div class="panel pad10" ng-show="! formatter.isMe(profile.id)">
+        <h5>{{'PRIVATE_MESSAGE_TO' | translate}} {{profile.full_name}}</h5>
+        <textarea class="form-control b-sep" rows="8" ng-model="privateMessage"></textarea>
+
+        <button class="btn btn-white btn-sm" ng-click="sendMessageClick()">{{'SEND' | translate}}</button>
+    </div>
+</div>
+</div>
+
+
+

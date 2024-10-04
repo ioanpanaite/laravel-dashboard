@@ -1,0 +1,5 @@
+.env.php
+.env.php_old
+.env.php_old_2_5
+package-lock.json
+vendor

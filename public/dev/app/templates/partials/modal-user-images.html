@@ -1,0 +1,28 @@
+<div class="modal" tabindex="-1" role="dialog" bindonce>
+    <div class="modal-dialog space-dialog modal-lg" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{title}}</h4>
+                <div class="clearfix"></div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div ng-repeat="preview in profile.imagePreviews | limitTo:limitToImages" class="col-sm-4">
+                        <a href="javascript:void(0)" class="thumbnail">
+                            <img ng-src="{{preview.url}}" class="img-rounded">
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-sm-offset-4 text-center" ng-show="isShowMoreImagesButton()">
+                        <button class="btn btn-sm btn-primary" ng-click="moreImages()">More images</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-primary" ng-click="editSpaceOkClick()">{{'OK' | translate}}</button>&nbsp;-->
+                <button type="button" class="btn btn-default" ng-click="$hide()">{{'CANCEL' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>

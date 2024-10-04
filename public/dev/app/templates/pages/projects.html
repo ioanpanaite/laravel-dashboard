@@ -1,0 +1,54 @@
+<div class="content-header b-b">
+    <h1><i class="fa fa-sliders" style="transform: rotate(90deg)"></i> {{'PROJECTS' | translate}}</h1>
+</div>
+<div class="content-body">
+    <div class="col-md-2">
+        <div class='side-panel'>
+            <h5>{{'FILTER' | translate}}</h5>
+                <input type="search" class="form-control" ng-model="projectsSearch.text" ng-enter="doSearch()">
+            <br>
+            <h5>{{'ORDER' | translate}}</h5>
+            <ul>
+                <li class='side-menu' >
+                    <a href='javascript:void(0)' ng-click="order='full_name'">{{'FULL_NAME' | translate}}</a>
+                </li>
+                <li class='side-menu'>
+                    <a href='javascript:void(0)' ng-click="order='date'">{{'DATE_AND_TIME' | translate}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-10" >
+        <div class="pasnel panel-stream animated fadeInDown" >
+
+            <div class="row">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td><strong>Title</strong></td>
+                            <td><strong>Description</strong></td>
+                            <td><strong>Registrar</strong></td>
+                            <td><strong>Date</strong></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="project in projects | orderBy: order | projectsFilter:projectsSearch.text">
+                            <td><a href="javascript:void(0)" ng-click="$hide();gotoSpace(project.code);">{{project.title}}</a></td>
+                            <td><a href="javascript:void(0)" ng-click="$hide();gotoSpace(project.code);">{{project.description}}</a></td>
+                            <td>
+                                <img class="thumb-sm avatar pull-left" width='30' ng-src="{{formatter.getAvatar(project.user_id)}}">
+                                <div style='margin-left:47px; font-weight:300; font-size:15px' >
+                                    <a href="#/userprofile/{{project.user_id}}">{{project.full_name}}</a>
+                                    <br>
+                                    <small>{{project.position || '&nbsp;'}}<span ng-if="project.position">&nbsp;-&nbsp;</span>{{project.organization}}</small>
+                                </div>
+                            </td>
+                            <td>{{project.created_at}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

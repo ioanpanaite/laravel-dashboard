@@ -1,0 +1,51 @@
+<!--<p>This is initiative placeholder</p>-->
+<!--<p>Initiative code = {{initiativeCode}}</p>-->
+
+<div class="content-header b-b">
+    <div class="row">
+        <div class="col-md-2">
+            <h1 style="margin-left: 3px"><i ng-class="currentInitiative.access() == 'PU'? 'fa fa-unlock' : 'fa fa-lock'"></i> {{currentInitiative.title()}}</h1>
+            <span class="label label-danger" ng-if="currentInitiative.active()==0">{{'INACTIVE' | translate}}</span>
+        </div>
+
+        <div class="col-md-6" style="padding:0px;">
+            <div class="maintoolbar btn-group">
+                <a class="btn btn-xs" ng-click = 'selected=0'
+                   ng-class="selected == 0 ? 'btn-info' : 'btn-white'"
+                   ui-sref="initiative.stream"><i class="fa fa-comment-o"></i> {{'STREAM' | translate}}</a>
+                <a ng-class="selected == 1 ? 'btn-info' : 'btn-white'"
+                   ng-if="currentInitiative.options().features.indexOf('drive') >= 0"
+                   class="btn btn-xs" ui-sref="initiative.files"><i class="fa fa-hdd-o"></i> {{'DRIVE' | translate}}</a>
+                <a ng-class="selected == 2 ? 'btn-info' : 'btn-white'"
+                   ng-if="currentInitiative.options().features.indexOf('wikis') >= 0"
+                   class="btn btn-xs" ui-sref="initiative.wiki"><i class="fa fa-file-word-o"></i> {{'WIKIS' | translate}}</a>
+                <a ng-if="currentInitiative.options().features.indexOf('tasks') >= 0"
+                   ng-class="selected == 3 ? 'btn-info' : 'btn-white'"
+                   class="btn btn-xs" ui-sref="initiative.tasks"><i class="fa fa-tasks"></i> {{'TASKS' | translate}}</a>
+
+                <a ng-repeat="module in modules" href="javascript:void(0)"
+                   ng-class="selected == 4 + $index ? 'btn-info' : 'btn-white'"
+                   class="btn btn-xs" ui-sref="space.{{module.moduleName}}">
+                    <i class="{{module.icon}}"></i>
+                    {{module.caption}}
+                    </i>
+                </a>
+
+                <a ng-if="currentInitiative.role()==3"
+                   ng-class="selected == 4 ? 'btn-info' : 'btn-white'"
+                   class="btn btn-xs" ui-sref="initiative.admin"><img src="https://img.icons8.com/carbon-copy/15/000000/information.png"> {{'INITIATIVE_INFO' | translate}}</i>
+                </a>
+
+                <!-- <a class="btn btn-xs btn-white" href="javascript:void(0)"
+                   ng-if="currentInitiative.options().features.indexOf('chat') >= 0"
+                   data-template="partials/aside-chat.html" data-backdrop = "false"
+                   data-animation="am-fade-and-slide-right" data-placement="right"
+                   data-container="body" bs-aside="">{{'INITIATIVE_MEETINGS' | translate}}
+                </a> -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ui-view></div>

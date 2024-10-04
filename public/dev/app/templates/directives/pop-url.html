@@ -1,0 +1,12 @@
+<div class="popover" style="max-width: 100% !important; display: block; padding: 7px;">    
+    <div>
+        <i ng-click="$parent.urlClose()" class="fa fa-times" aria-hidden="true" style="float: right; color: gray;"></i>
+    </div>
+
+    <div ng-if="urlcontent.code == null" class="row">
+        <blockquote class="wp-embedded-content">
+            <a href="{{urlcontent.imageWidth.url}}">{{urlcontent.title}}</a>
+        </blockquote>
+        <img class="col-xs-12 col-md-12 col-sm-12" style="padding: 3px; height: 343px;" ng-src="{{urlcontent.imageURL}}" alt="content">
+    </div>
+</div>

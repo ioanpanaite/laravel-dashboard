@@ -1,0 +1,48 @@
+<div class="modal" tabindex="-1" role="dialog" bindonce>
+    <div class="modal-dialog space-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{title}}</h4>
+                <div class="clearfix"></div>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"><strong>{{'TITLE' | translate}}</strong></label>
+                        <div class="col-md-10">
+                           <input class="form-control" ng-keypress="$parent.error['title']=null" ng-model="editQuestion.title">
+                           <span class="inline-error">{{$parent.error['title']}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"><strong>{{'DESCRIPTION' | translate}}</strong></label>
+                        <div class="col-md-10">
+                            <textarea class="form-control" rows="4" ng-model="editQuestion.description"></textarea>
+                            <span class="inline-error">{{$parent.error['description']}}</span>
+                        </div>
+                    </div>
+
+					<div class="form-group">
+						<label class="col-md-2 control-label">
+						<strong class="ng-binding">Sector</strong></label>
+						<div class="col-md-10">
+							<input class="form-control" ng-keypress="$parent.error['sector']=null" ng-model="editQuestion.sector">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label"><strong class="ng-binding">Reward</strong></label>
+						<div class="col-md-10">
+							<input class="form-control" ng-keypress="$parent.error['reward']=null" ng-model="editQuestion.reward">
+						</div>
+					</div>
+					
+                 </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="editQuestionOkClick()">{{'OK' | translate}}</button>&nbsp;
+                <button type="button" class="btn btn-default" ng-click="$hide()">{{'CANCEL' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>

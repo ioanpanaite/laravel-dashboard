@@ -1,0 +1,64 @@
+<div class="modal" tabindex="-1" role="dialog" bindonce>
+   <div class="modal-dialog space-dialog">
+	<div class="modal-content"><div class="modal-header">
+		<h4 class="modal-title ng-binding">New idea</h4>
+	<div class="clearfix"></div>
+	</div>
+	<div class="modal-body">
+		<form class="form-horizontal ng-pristine ng-valid">
+			<div class="form-group">
+				<label class="col-md-2 control-label">
+					<strong class="ng-binding">Title</strong>
+				</label>
+				<div class="col-md-10">
+					<input ng-model="editIdea.title" ng-keypress="error['title']=null" class="form-control ng-pristine ng-valid">
+						<span class="inline-error ng-binding"></span></div></div>
+				<div class="form-group">
+					<label class="col-md-2 control-label"><strong class="ng-binding">Description</strong></label>
+						<div class="col-md-10"><textarea ng-model="editIdea.description" rows="4" class="form-control ng-pristine ng-valid"></textarea>
+						<span class="inline-error ng-binding"></span></div></div><div class="form-group"><label class="col-md-2 control-label">
+						<strong class="ng-binding">Access</strong></label><div class="col-md-10">
+					<select ng-model="editIdea.access" class="form-control ng-pristine ng-valid">
+					<option value="PU" class="ng-binding">Public</option><option value="PR" class="ng-binding">Private</option>
+					</select></div></div>
+					<div class="form-group">
+						<label class="col-md-2 control-label">
+						<strong class="ng-binding">Purpose</strong></label>
+						<div class="col-md-10"><textarea ng-model="editIdea.purpose_of_idea" rows="4" class="form-control ng-pristine ng-valid"></textarea>
+						<span class="inline-error ng-binding"></span></div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label"><strong class="ng-binding">Upload video</strong></label>
+						<div class="col-md-10"><input type="file" file-model="editIdea.idea_video">
+						<span class="inline-error ng-binding"></span></div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label"><strong class="ng-binding">Upload paper</strong></label>
+						<div class="col-md-10"><input type="file" file-model="editIdea.idea_paper">
+						<span class="inline-error ng-binding"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label"><strong class="ng-binding">Steps of planning</strong></label>
+						<div class="col-md-10">
+							<textarea ng-model="editIdea.stpes_of_development" rows="4" class="form-control ng-pristine ng-valid"></textarea>
+							<span class="inline-error ng-binding"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label">
+						<strong class="ng-binding">Planning estimation</strong></label>
+						<div class="col-md-10">
+							<textarea ng-model="editIdea.planning_estimation" rows="4" class="form-control ng-pristine ng-valid"></textarea><span class="inline-error ng-binding"></span>
+						</div>
+					</div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"><strong>{{'OPTIONS' | translate}}</strong></label>
+                        <label ng-repeat="feature in features" class="control-label">
+                            <input type="checkbox" checklist-model="editIdea.options.features" checklist-value="feature.value">&nbsp;{{feature.text}}&nbsp;&nbsp;&nbsp;
+                        </label>
+                    </div>
+					<div class="form-group m-b-xs terms">
+					<label class="col-md-2 control-label">
+					</label><input type="checkbox" class="form-control ng-pristine ng-valid" ng-model="editIdea.terms"><p>I have read and agree to the <a href="#">Terms of Services</a></p><span class="inline-error ng-binding"></span></div></form></div><div class="modal-footer"><button ng-click="editIdeaOkClick()" class="btn btn-primary ng-binding" type="button">Ok</button>&nbsp;<button ng-click="$hide()" class="btn btn-default ng-binding" type="button">Cancel</button></div></div></div>
+</div>

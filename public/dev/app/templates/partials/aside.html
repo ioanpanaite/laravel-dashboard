@@ -1,0 +1,41 @@
+<div class="aside bs-docs-aside" tabindex="-1" role="dialog">
+    <div class="aside-dialog">
+        <div class="aside-content">
+            <div class="aside-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="aside-title">{{'MENU' | translate}}</h4>
+            </div>
+            <div class="aside-body-menu">
+                <div class=''>
+                    <div class="aside-btn-group">
+                        <button class="btn btn-info" ng-click="$hide();gotoPage('home');"><i class="fa fa-home"></i></button>
+                        <button class="btn btn-info" ng-click="$hide();gotoPage('profile');"><i class="fa fa-user"></i></button>
+                        <button class="btn btn-info" ng-click="$hide()" data-template="partials/aside-spaces.html" data-animation="am-fade-and-slide-left" data-placement="left" title="My projects" data-container="body" bs-aside="" ><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABmJLR0QA/wD/AP+gvaeTAAABAklEQVQ4ja2SLU5DQRhFzxTEwzSIGjCVJCALK8Ah+NF4QtgDSdeBIHQFVMIO2AAChyFFECDBkEByMAOZTub1vYZe9+Z998x3bwYWpJB+qOfAQc3sB3AaQnhopKpf1utOfVI32oBmaUe9Up/Vzf+ABmqnFawBtB9nltSR+ph687JtzJ+aQ/jzLxf+fwLHwBmwC9zHs19VwNbMG2KEV7WvXqoTtcpmqthR/fZJHzfqS0NnU6BSR5MQwro6jPGOCtHGQK+pozX1FtgGusBJAbSamzoF0Fs0j+sqKKm00QowAPrAO3BR2GgP6KWmhb2jPNr3HJyp2TzaEDgk27Qgges5Lm2vH/OZIyGxtkVLAAAAAElFTkSuQmCC"></button>
+                        <button class="btn btn-info" ng-click="$hide()" data-template="partials/aside-questions.html" data-animation="am-fade-and-slide-left" data-placement="left" title="My questions" data-container="body" bs-aside=""><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABmJLR0QA/wD/AP+gvaeTAAABAklEQVQ4ja2SLU5DQRhFzxTEwzSIGjCVJCALK8Ah+NF4QtgDSdeBIHQFVMIO2AAChyFFECDBkEByMAOZTub1vYZe9+Z998x3bwYWpJB+qOfAQc3sB3AaQnhopKpf1utOfVI32oBmaUe9Up/Vzf+ABmqnFawBtB9nltSR+ph687JtzJ+aQ/jzLxf+fwLHwBmwC9zHs19VwNbMG2KEV7WvXqoTtcpmqthR/fZJHzfqS0NnU6BSR5MQwro6jPGOCtHGQK+pozX1FtgGusBJAbSamzoF0Fs0j+sqKKm00QowAPrAO3BR2GgP6KWmhb2jPNr3HJyp2TzaEDgk27Qgges5Lm2vH/OZIyGxtkVLAAAAAElFTkSuQmCC"></button>
+                        <button class="btn btn-info" ng-click="$hide()" data-template="partials/aside-initiatives.html" data-animation="am-fade-and-slide-left" data-placement="left" title="My initiatives" data-container="body" bs-aside=""><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABmJLR0QA/wD/AP+gvaeTAAABAklEQVQ4ja2SLU5DQRhFzxTEwzSIGjCVJCALK8Ah+NF4QtgDSdeBIHQFVMIO2AAChyFFECDBkEByMAOZTub1vYZe9+Z998x3bwYWpJB+qOfAQc3sB3AaQnhopKpf1utOfVI32oBmaUe9Up/Vzf+ABmqnFawBtB9nltSR+ph687JtzJ+aQ/jzLxf+fwLHwBmwC9zHs19VwNbMG2KEV7WvXqoTtcpmqthR/fZJHzfqS0NnU6BSR5MQwro6jPGOCtHGQK+pozX1FtgGusBJAbSamzoF0Fs0j+sqKKm00QowAPrAO3BR2GgP6KWmhb2jPNr3HJyp2TzaEDgk27Qgges5Lm2vH/OZIyGxtkVLAAAAAElFTkSuQmCC"></button>
+                        <button class="btn btn-info" ng-click="$hide();gotoPage('people');"><i class="fa fa-users"></i></button>
+                        <button class="btn btn-info" ng-click="$hide();gotoPage('meetings');"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABmJLR0QA/wD/AP+gvaeTAAABZElEQVQ4jb2QMUtcQRhFz7wIWwjZtUkg1iktDMIiGOvElCGQf5B0WqVJwE4I+APsrRQjGzAQUipIirBrF4U0WpliV8EmoO6xmY2z4+6zEPyqmbnn3e/eB4BaVb+pZ+qaWmHIqBV1PbJb6sNU/GT/vCsxep+xHwGKqI9mfH4v067v6rh6EDc01VpJojG1Fdl99UkO1NQZ9VFJmh5bjezjXFhUz+OWy17vISbzCdtVP/eEZ/Ehna46O8BkUr3w5kyhNtTfajsTW+qDxCSouxlzqh6qXwpgGmgA3WT5D2ACWFEn49syUAe2E+4c2ACmCuA78CJrsQcsAK+AproKjAAfgJ8ZOwd8RX0bY/5LIi/FOoX6XK0nFZeyf6n6cgT4BWzGKk8j3wEIIXSBnSxBJzkfxu9bRQjhTwjhNfA3AdoMn9ToKITwJoRwXAwByozag87FbcAtRv+X39XofhIJnJQYdSLTZ3oFV7SCKyZaKt0AAAAASUVORK5CYII="></button>
+                        <button class="btn btn-info" ng-click="$hide();gotoPage('tasks');"><i class="fa fa-tasks"></i></button>
+                        <button class="btn btn-info" ng-click="$hide();gotoPage('calendar');"><i class="fa fa-calendar"></i></button>
+                        <button class="btn btn-info" ng-click="$hide();gotoPage('messages');"><i class="fa fa-envelope"></i></button>
+                        <button class="btn btn-info" ng-click="$hide();gotoPage('questions');"><i class="fa fa-question-circle"></i></button>
+                        <button class="btn btn-info" ng-click="$hide();gotoPage('projects');"><i class="fa fa-sliders" style="transform: rotate(90deg)"></i></button>
+                        <a class="btn btn-info" href="{{getLogoutUrl()}}"><i class="fa fa-sign-out"></i></a>
+                    </div>
+                    <div style="padding: 5px"></div>
+                    <div class="input-group">
+                        <input type="search" class="form-control" id='' placeholder=" {{'SEARCH' | translate}}" ng-model="search.text" ng-enter="$hide();doSearch()">
+                         <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" ng-click="$hide();doSearch()"><i class="fa fa-search"></i> </button>
+                         </span>
+                    </div>
+                    <ul class="aside-menu" ng-cloak>
+                            <li ng-repeat="space in spaces | orderBy: 'title'" class="aside-item">
+                                <a href='javascript:void(0)' ng-click="$hide();gotoSpace(space.code);">{{space.title}}</a>
+                            </li>
+                        </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

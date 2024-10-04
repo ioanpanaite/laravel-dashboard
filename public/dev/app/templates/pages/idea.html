@@ -1,0 +1,10 @@
+<div class="content-header b-b">
+    <div class="row">
+        <div class="col-md-2">
+            <h1 style="margin-left: 3px"><i ng-class="currentIdea.access() == 'PU'? 'fa fa-unlock' : 'fa fa-lock'"></i> {{currentIdea.title()}}</h1>
+            <span class="label label-danger" ng-if="currentIdea.active()==0">{{'INACTIVE' | translate}}</span>
+        </div>
+    </div>
+</div>
+
+<div ui-view></div>

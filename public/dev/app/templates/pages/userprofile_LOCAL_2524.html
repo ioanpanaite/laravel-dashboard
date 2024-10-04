@@ -1,0 +1,218 @@
+
+<div class="content-body" ng-cloak>
+
+    <div class="col-md-9">
+       <div class="panel panel-stream">
+           <div class='row' style="padding: 10px">
+			<div class="col-md-7">
+                <span class="pull-left avatar m-r">
+                    <img ng-src="{{formatter.getAvatar(userid)}}" style="max-width:100px; max-height: 100px" >
+                </span>
+                <span class="clear">
+                    <div class="profile-fullname">{{profile.full_name}}</div>
+                    <div class="profile-sub">
+                        {{profile.position || '&nbsp;'}}<span ng-if="profile.position">&nbsp;-&nbsp;</span>{{profile.organization}}
+                    </div>
+                    <div class="b-b" style="margin: 5px 0px 5px 0px"></div>
+                    <div class="col-md-10 no-pad">
+                        <table>
+                            <tr ng-repeat="field in profile.custom_fields">
+                                <td class="td-profile-title" >{{field.caption}}&nbsp;&nbsp;</td>
+                                <td class="td-profile-value" >{{profile['custom_'+field.name]}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </span>
+
+
+                <div class="row" style="padding-top: 30px">
+                        <h5>{{'IMAGES' | translate}}</h5>
+
+                        <div class="row clear" style="width:450px">
+                            <div class="col-sm-3" ng-repeat="preview in profile.imagePreviews | limitTo:3">
+                                <a href="#" class="thumbnail">
+                                    <img ng-src="{{preview.url}}">
+                                </a>
+                            </div>
+                            <div class="col-sm-3" style="padding-top: 70px" ng-show="profile.imagePreviews.length > 2">
+                                <a href="javascript:void(0)" ng-click="openImagesModal()">{{'MORE' | translate}}</a>
+                            </div>
+                        </div>
+
+                        <div class="row clear">
+                            <div class="col-sm-12">
+								   <input id="photoEditor" type="file" accept="image/*" ng-file-select="onFileSelect($files)" style="position:absolute;left:-10000px;top:-10000px;">
+								   <button class='btn btn-xs btn-gray' style='font-size:12px' ng-click="photoClick()">
+									   <i class='fa fa-upload'></i> {{'UPDATE_PHOTO' | translate}}
+								   </button>
+								   <span us-spinner="{width:2, length:2, shadow:on, color:'#000', hwaccel:on,radius:5}" spinner-key="avatarSpinner"></span>
+                            </div>
+                        </div>
+
+                        <h5>{{'VIDEOS' | translate}}</h5>
+
+                        <div class="row" style="width:450px">
+                            <div class="col-sm-3" ng-repeat="preview in profile.videoPreviews | limitTo:3">
+                                <a href="javascript:void(0)" class="thumbnail">
+                                    <img ng-src="{{preview.url}}">
+                                </a>
+                            </div>
+                            <div class="col-sm-3" style="padding-top: 70px" ng-show="profile.videoPreviews.length > 2">
+                                <a href="javascript:void(0)" ng-click="openVideosModal()">{{'MORE' | translate}}</a>
+                            </div>
+                        </div>
+
+                        <div class="row clear">
+                            <div class="col-sm-12">
+								   <input id="videoEditor" type="file" accept="image/*" ng-file-select="onVideoSelect($files)" style="position:absolute;left:-10000px;top:-10000px;">
+								   <button class='btn btn-xs btn-gray' style='font-size:12px' ng-click="videoClick()">
+									   <i class='fa fa-upload'></i> Upload Video
+								   </button>
+								   <span us-spinner="{width:2, length:2, shadow:on, color:'#000', hwaccel:on,radius:5}" spinner-key="avatarSpinner"></span>
+                            </div>
+                        </div>
+                </div>
+
+			</div>
+      
+	   
+		<div class="col-md-5">
+			<div ng-if="profile.is_follow_show == 1">
+				<div class="col-md-5">
+					<p ng-if="profile.followStatus == 0">
+					<button type=button class="btn btn-primary" ng-click=followMe(userid)>{{'FOLLOW' | translate}} {{profile.first_name}}</button></p>
+					<p ng-if="profile.followStatus == 1">
+					<button type=button class="btn btn-primary" ng-click=unfollowMe(userid)>{{'UNFOLLOW' | translate}} {{profile.first_name}}</button>
+				</p>
+				</div>
+			</div>
+			<div class=col-md-10>
+				<h5 class="ng-binding">{{'PROJECTS' | translate}}</h5>
+				<div class="pasnel panel-stream animated fadeInDown">
+					<div class=row>
+						<table class=table>
+						<tbody>
+						<tr ng-repeat="space in profile.spaces | orderBy: title">
+						<td>{{space.title}}</td>
+						</tr>
+						</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class=col-md-10>
+				<h5 class="ng-binding">{{'USER_INITIATIVES' | translate}}</h5>
+				<div class="pasnel panel-stream animated fadeInDown">
+					<div class=row>
+						<table class=table>
+						<tbody>
+						<tr ng-repeat="initiative in profile.initiatives | orderBy: title">
+						<td>{{initiative.title}}</td>
+						</tr>
+						</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class=col-md-10>
+				<h5 class="ng-binding">{{'IDEAS' | translate}}</h5>
+				<div class="pasnel panel-stream animated fadeInDown">
+					<div class=row>
+						<table class=table>
+						<tbody>
+						<tr ng-repeat="idea in profile.ideas | orderBy: title">
+						<td>{{idea.title}}</td>
+						</tr>
+						</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+            <div class=col-md-10>
+                <h5>{{'RECENT_ACTIVITY' | translate}}</h5>
+				   <div  class="panel panel-stream"
+						 style='z-index:{{1000-$index}}; box-shadow:  none; border-bottom: 1px solid #ddd' ng-repeat="content in contents track by content.id" bindonce>
+					   <div class="col-md-4" bindonce style="float:left">
+						   <i class="{{icons[content.class_id]}} fa-2x pull-left">&nbsp;</i>
+						   <div style='margin-left:50px; font-weight:400; font-size:14px' >
+							   <p style="font-weight:400; margin-top:2px; font-size:12px; color:#666">
+								   {{formatter.formatDateCalendarUtc(content.created_at)}}
+								   <br>
+								   {{'POSTED' | translate}} {{'CONTENT_CLASS_'+content.class_id | translate}} @<a href="javascript:void(0)" ng-click="gotoSpace(content.space_code)">{{content.space}}</a><br>
+							   </p>
+						   </div>
+					   </div>
+					   <div class="col-md-8" bindonce>
+						   <p style="font-size: 12px; font-style: italic; color:#666">
+
+							   <span ng-bind-html="content.content_text" class="home-content-text"></span>&nbsp;
+							   <br>
+							   <a ng-click="zoomClick(content.id)" class="btn btn-table">
+								   <i class="fa fa-fw fa-arrow-circle-right "></i>
+							   </a>&nbsp;
+
+						   </p>
+					   </div>
+
+					   <div class="clearfix"></div>
+				   </div>
+            </div>
+		</div>
+    </div>
+       <div class="panel panel-stream" style="padding: 10px !important;">
+           <h5>{{'RECENT_ACTIVITY' | translate}}</h5><br>
+           <div  class="panel panel-stream"
+                 style='z-index:{{1000-$index}}; box-shadow:  none; border-bottom: 1px solid #ddd' ng-repeat="content in contents track by content.id" bindonce>
+               <div class="col-md-4" bindonce style="float:left">
+                   <i class="{{icons[content.class_id]}} fa-2x pull-left">&nbsp;</i>
+                   <div style='margin-left:50px; font-weight:400; font-size:14px' >
+                       <p style="font-weight:400; margin-top:2px; font-size:12px; color:#666">
+                           {{formatter.formatDateCalendarUtc(content.created_at)}}
+                           <br>
+                           {{'POSTED' | translate}} {{'CONTENT_CLASS_'+content.class_id | translate}} @<a href="javascript:void(0)" ng-click="gotoSpace(content.space_code)">{{content.space}}</a><br>
+                       </p>
+                   </div>
+               </div>
+               <div class="col-md-8" bindonce>
+                   <p style="font-size: 12px; font-style: italic; color:#666">
+
+                       <span ng-bind-html="content.content_text" class="home-content-text"></span>&nbsp;
+                       <br>
+                       <a ng-click="zoomClick(content.id)" class="btn btn-table">
+                           <i class="fa fa-fw fa-arrow-circle-right "></i>
+                       </a>&nbsp;
+
+                   </p>
+               </div>
+
+               <div class="clearfix"></div>
+           </div>
+       </div>
+<div class="col-md-6"><h5 class="ng-binding">Follows</h5><div class="pasnel panel-stream animated fadeInDown"><div class="row"><table class="table"><thead><tr><td><strong>Name</strong></td><td><strong>Email</strong></td><td><strong>Phone</strong></td><td><strong>Organization</strong></td></tr></thead><tbody><!-- ngRepeat: user in profile.followers | orderBy: full_name --><tr ng-repeat="user in profile.followers | orderBy: full_name" class="ng-scope"><td class="ng-binding">prince suneja</td><td class="ng-binding">admin@admin.com</td><td class="ng-binding">allAlgos IT Solutions</td><td class="ng-binding">9988915540</td></tr><!-- end ngRepeat: user in profile.followers | orderBy: full_name --></tbody></table></div></div>   </div>
+<div class="col-md-6"><h5 class="ng-binding">Following</h5><div class="pasnel panel-stream animated fadeInDown"><div class="row"><table class="table"><thead><tr><td><strong>Name</strong></td><td><strong>Email</strong></td><td><strong>Phone</strong></td><td><strong>Organization</strong></td></tr></thead><tbody><!-- ngRepeat: user in profile.following | orderBy: full_name --></tbody></table></div></div></div>
+</div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="panel pad10">
+            <h5>{{'CONTACT' | translate}}</h5>
+            <div ng-if='profile.email'      class='profile-contact-info'><i class='fa fa-envelope fa-fw'></i><a href="mailto:{{profile.email}}"> {{profile.email || ''}}</a></div>
+            <div ng-if='profile.phone'      class='profile-contact-info'><i class='fa fa-phone fa-fw'></i><a href="javascript:void(0)"> {{profile.phone || ''}}</a></div>
+            <div ng-if='profile.facebook'   class='profile-contact-info'><i class='fa fa-facebook fa-fw'></i><a href="https://facebook.com/{{profile.facebook}}" target="_blank"> {{profile.facebook}}</a></div>
+            <div ng-if='profile.twitter'    class='profile-contact-info'><i class='fa fa-twitter fa-fw'></i><a href="https://twitter.com/{{profile.twitter}}" target="_blank"> {{profile.twitter}}</a></div>
+            <div ng-if='profile.googleplus' class='profile-contact-info'><i class='fa fa-google-plus fa-fw'></i><a href="https://plus.google.com/+{{profile.googleplus}}" target="_blank"> {{profile.googleplus}}</a></div>
+            <div ng-if='profile.linkdin'    class='profile-contact-info'><i class='fa fa-linkedin fa-fw'></i><a href="http://www.linkedin.com/{{profile.linkedin}}" target="_blank"> {{profile.linkedin}}</a></div>
+            <div ng-if='profile.skype'      class='profile-contact-info'><i class='fa fa-skype fa-fw'></i><a href="javascript:void(0)"> {{profile.skype}}</a></div>
+            <div ng-if='profile.github'     class='profile-contact-info'><i class='fa fa-github fa-fw'></i><a href="https://github.com/{{profile.github}}" target="_blank"> {{profile.github}}</a></div>
+        </div>
+        <div class="panel pad10" ng-show="! formatter.isMe(profile.id)">
+                <h5>{{'PRIVATE_MESSAGE_TO' | translate}} {{profile.full_name}}</h5>
+                <textarea class="form-control b-sep" rows="8" ng-model="privateMessage"></textarea>
+
+                <button class="btn btn-white btn-sm" ng-click="sendMessageClick()">{{'SEND' | translate}}</button>
+        </div>
+    </div>
+</div>
+
+
+
